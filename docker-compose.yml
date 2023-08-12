@@ -1,0 +1,46 @@
+# docker-compose
+
+# the docker-compose is for information purpose only
+# the file maintains a 2-Space for TAB (instead of 4)
+# which is the default for all other file(s)
+
+version: "3.8"
+
+services:
+
+  standalone:
+
+    build: . # build from Dockerfile
+
+    container_name: flask-docker-template
+
+    ports:
+      # expose ports for flask
+      - "50001:5000"
+
+      # expose for mysql
+      - "33061:3306"
+
+    expose:
+      - "3306" # expose MySQL-Client
+      - "5000" # expose flask
+
+    environment:
+      # using root for mysql-client
+      # https://github.com/docker-library/mysql
+      MYSQL_ROOT_USER:     root
+      MYSQL_ROOT_PASSWORD: admin
+      # note you can create a new database using MYSQL_DATABASE
+      # but, only single database can be created by the same
+      # https://stackoverflow.com/a/40336552/6623589
+      # MYSQL_DATABASE: template
+
+    volumes:
+      # mount volumes for files below
+      # the init.sql is already present in /usr/src/helloworld/assets/db/
+      # the mount is shown as example
+      - ./assets/db/init.sql:/tmp/init.sql
+
+    command:
+      # initialize mysql-db
+      -- init-file /usr/src/helloworld/assets/db/init.sql

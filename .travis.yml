@@ -1,0 +1,22 @@
+# Getting Started with Travis CI
+# https://docs.travis-ci.com/user/tutorial/
+
+# however, if required, you can also configure CI using github-actions
+# https://github.com/features/actions
+# migrating from travis-ic to github-actions is also available at
+# https://docs.github.com/en/actions/learn-github-actions/migrating-from-travis-ci-to-github-actions
+
+language: python
+
+python: # specify the versions you want to check
+  - "3.7"
+  - "3.9"
+
+install:
+  - pip install -r requirements.txt
+
+script: # run the unittest model
+  - python3 -m unittest --verbose app/test/hello_unittest.py
+
+cache:
+  - pip
