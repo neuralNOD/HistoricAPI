@@ -26,3 +26,28 @@ symbols = pd.DataFrame(data = {
 }).set_index("CurrencyCode")
 
 symbols.to_excel("symbols.xlsx")
+
+# historical time series
+# Set API Endpoint and API key
+endpoint = 'timeseries'
+
+
+start_date = "2023-01-01"
+end_date = "2023-06-30"
+base = "USD"
+
+# Construct the URL
+url = f'http://api.exchangeratesapi.io/v1/{endpoint}?access_key={access_key}&start_date={start_date}&end_date={end_date}&base={base}' # base does not work
+
+# Send a GET request using the requests library
+response = requests.get(url)
+
+# Check if the request was successful
+if response.status_code == 200:
+    # Get the JSON response
+    exchange_rates = response.json()
+
+    # Access the exchange rate values, e.g. GBP
+    print(exchange_rates['rates']['GBP'])
+else:
+    print('Error:', response.status_code)
