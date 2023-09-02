@@ -28,10 +28,19 @@ if __name__ == "__main__":
     countries.columns = ["CountryID", "CountryName", "ISO2", "RegionName", "SubRegionName", "CapitalName", "CurrencyCode", "TLD", "CountryLatitude", "CountryLongitude"]
 
     # ? States Master Table
-    states = pd.read_csv("../sources/WorldGeographyDB/csv/states.csv")
-    states = states.merge(countries[["CountryID", "ISO2"]], left_on = "country_code", right_on = "ISO2")
+    states = pd.read_csv(os.path.join(DATA, "states.csv"))
+    states = states.merge(countries[["CountryID", "ISO2"]], left_on = "country_code", right_on = "ISO2", how = "left")
     states["StateID"] = [str(uuid.uuid4()).upper() for _ in range(states.shape[0])]
-    states = states[["StateID", "name", "CountryID", "state_code", "type", "latitude", "longitude"]]
-    states.columns = ["StateID", "StateName", "CountryID", "StateCode", "StateType", "StateLatitude", "StateLongitude"]
+    states = states[["id", "StateID", "name", "CountryID", "state_code", "type", "latitude", "longitude"]]
+    states.columns = ["_id", "StateID", "StateName", "CountryID", "StateCode", "StateType", "StateLatitude", "StateLongitude"]
 
     # ? Cities Master Table
+    cities = pd.read_csv(os.path.join(DATA, "cities.csv"))
+    cities = cities.merge(states[["_id", "StateID"]], left_on = "state_id", right_on = "_id", how = "left")
+    cities = cities.merge(countries[["CountryID", "ISO2"]], left_on = "country_code", right_on = "ISO2", how = "left")
+    cities["CityID"] = [str(UUID()).upper() for _ in range(cities.shape[0])]
+    cities = cities[["CityID", "name", "CountryID", "StateID", "latitude", "longitude"]]
+    cities.columns = ["CityID", "CityName", "CountryID", "StateID", "CityLatitude", "CityLongitude"]
+
+    # run redundant columns from states
+    states.drop(columns = ["_id"], inplace = True)
