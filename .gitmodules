@@ -1,3 +1,8 @@
 [submodule "scripts/webscrappers"]
 	path = scripts/webscrappers
 	url = https://gist.github.com/ZenithClown/809642277fba2d8d2309e55ab307615f.git
+
+[submodule "sources/WorldGeographyDB"]
+	path = sources/WorldGeographyDB
+	url = https://github.com/dr5hn/countries-states-cities-database.git
+
