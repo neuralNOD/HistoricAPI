@@ -1,7 +1,5 @@
 <h1 align = "center">Historic API</h1>
 
----
-
 <div align = "justify">
 
 The database and API consolidates various *open-source* and *proprietary* data sources to provide a 360° view about the world macroeconomics factors -
