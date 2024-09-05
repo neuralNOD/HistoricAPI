@@ -21,6 +21,11 @@ CREATE TABLE IF NOT EXISTS meta.forex_rate_source (
 
     source_desc
         VARCHAR(256)
+        NOT NULL,
+
+    website
+        VARCHAR(128)
+        CONSTRAINT uq_forex_rate_source_website UNIQUE
         NOT NULL
 );
 
